@@ -2,30 +2,48 @@
   "name": "vue",
   "version": "0.1.0",
   "private": true,
+  "resolutions": {
+    "prosemirror-model": "1.8.2"
+  },
   "scripts": {
     "postinstall": "link-module-alias",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "tauri:build": "vue-cli-service tauri:build",
-    "tauri:serve": "vue-cli-service tauri:serve"
+    "tauri:serve": "vue-cli-service tauri:serve",
+    "test:pm": "moduleserve tests/Editor",
+    "test:vue": "mochapack --webpack-config tests/Vue/webpack.config.js --require tests/Vue/setup.js tests/Vue/*.test.js "
   },
   "_moduleAliases": {
     "pages": "assets/vueFiles/pages",
     "components": "assets/vueFiles/components",
     "template": "assets/vueFiles/template",
-    "node_modules": "node_modules"
+    "node_modules": "node_modules",
+    "nodes": "dist/editor/Nodes"
   },
   "dependencies": {
+    "@types/expect": "^24.3.0",
+    "@vue/test-utils": "^1.0.3",
+    "chai": "^4.2.0",
     "core-js": "^3.6.5",
+    "jquery": "^3.5.1",
+    "jsdom-global": "^3.0.2",
     "link-module-alias": "^1.2.0",
-    "mocha": "^8.0.1",
+    "mocha": "=7.0.1",
+    "mochapack": "^2.0.3",
+    "moduleserve": "^0.9.1",
     "mongoose": "^5.9.23",
     "node-cache": "^5.1.2",
+    "node-sass": "^4.14.1",
+    "sass-loader": "^9.0.2",
     "tiptap": "^1.29.1",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
-    "vue-property-decorator": "^8.4.2"
+    "vue-property-decorator": "^8.4.2",
+    "vue-style-loader": "^4.1.2",
+    "webpack": "^4.43.0",
+    "webpack-node-externals": "^2.5.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.33.0",

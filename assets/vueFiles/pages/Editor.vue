@@ -4,24 +4,58 @@
 
 <script>
 // Import the editor
-import { Editor, EditorContent } from 'tiptap'
+import { Editor, EditorContent } from "tiptap";
+import Container from "nodes/Container.js";
+import Doc from "nodes/Doc.js";
+import Paragraph from "nodes/Paragraph.js";
 
 export default {
   components: {
-    EditorContent,
+    EditorContent
   },
   data() {
     return {
-      editor: null,
-    }
+      editor: null
+    };
   },
   mounted() {
     this.editor = new Editor({
-      content: '<p>This is just a boring paragraph</p>',
-    })
+      content: `
+       <div data-type="drag_item" contenteditable="false">
+            <div ref="content" contenteditable="true"> 
+            hello world </div>
+            <div data-drag-handle></div>
+          </div>
+                 <div data-type="drag_item" contenteditable="false">
+            <div ref="content" contenteditable="true"> 
+            hello world 2 </div>
+            <div data-drag-handle></div>
+          </div>`,
+      extensions: [new Doc(), new Container(), new Paragraph()]
+    });
   },
   beforeDestroy() {
-    this.editor.destroy()
-  },
-}
+    this.editor.destroy();
+  }
+};
 </script>
+
+<style>
+[data-type="drag_item"] {
+  display: flex;
+  padding: 0.5rem;
+  background-color: rgba(black, 0.05);
+  margin-bottom: 0.5rem;
+  border-radius: 6px;
+}
+
+[data-type="drag_item"]:first-child {
+  flex: 1 1 auto;
+}
+
+[data-type="drag_item"]:last-child {
+  flex: 0 0 auto;
+  margin-left: auto;
+  cursor: move;
+}
+</style>
