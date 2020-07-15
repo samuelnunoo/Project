@@ -1,12 +1,13 @@
-import { Node } from "tiptap";
-import { NodeSpec } from "../../interfaces/NodeSpec";
+import { Node } from "tiptap"
+
+
 
 export default class Doc extends Node {
   get name(): string {
     return "doc";
   }
 
-  get schema() {
+  get schema(): Record<string,unknown> {
     return {
       content: "container+"
     };

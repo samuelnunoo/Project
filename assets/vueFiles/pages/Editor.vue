@@ -8,6 +8,7 @@ import { Editor, EditorContent } from "tiptap";
 import Container from "nodes/Container.js";
 import Doc from "nodes/Doc.js";
 import Paragraph from "nodes/Paragraph.js";
+import Heading from "nodes/Heading.js";
 
 export default {
   components: {
@@ -23,15 +24,15 @@ export default {
       content: `
        <div data-type="drag_item" contenteditable="false">
             <div ref="content" contenteditable="true"> 
-            hello world </div>
+            <p> hello world </p> </div>
             <div data-drag-handle></div>
           </div>
                  <div data-type="drag_item" contenteditable="false">
             <div ref="content" contenteditable="true"> 
-            hello world 2 </div>
+            <h1> hello world 2  </h1> </div>
             <div data-drag-handle></div>
           </div>`,
-      extensions: [new Doc(), new Container(), new Paragraph()]
+      extensions: [new Doc(), new Container(), new Paragraph(), new Heading()]
     });
   },
   beforeDestroy() {
