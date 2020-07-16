@@ -7,5 +7,8 @@ module.exports = {
       title: "Type.io"
     }
   },
-  runtimeCompiler: true
+  runtimeCompiler: true,
+  configureWebpack: {
+    devtool: 'source-map'
+  }
 };

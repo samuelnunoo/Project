@@ -21,17 +21,9 @@ export default {
   },
   mounted() {
     this.editor = new Editor({
-      content: `
-       <div data-type="drag_item" contenteditable="false">
-            <div ref="content" contenteditable="true"> 
-            <p> hello world </p> </div>
-            <div data-drag-handle></div>
-          </div>
-                 <div data-type="drag_item" contenteditable="false">
-            <div ref="content" contenteditable="true"> 
-            <h1> hello world 2  </h1> </div>
-            <div data-drag-handle></div>
-          </div>`,
+      content: `    
+    
+      `,
       extensions: [new Doc(), new Container(), new Paragraph(), new Heading()]
     });
   },
