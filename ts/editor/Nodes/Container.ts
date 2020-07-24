@@ -2,7 +2,7 @@ import { Node } from "tiptap";
 import { NodeSpec } from "../../interfaces/NodeSpec";
 import { View } from "../../interfaces/View";
 import blockTypeChanged from "../Plugins/blockTypeChange";
-import newLine from "../Plugins/newLine";
+import newLineUtility from "../Plugins/newLine";
 import { splitBlock } from "prosemirror-commands";
 
 export default class Container extends Node {
@@ -13,7 +13,7 @@ export default class Container extends Node {
 
   get schema(): NodeSpec {
     return {
-      content: "block",
+      content: "(block|type|list)",
       draggable: true,
       toDOM: () => ["div", { "data-type": "drag_item" }, 0],
       parseDOM: [
@@ -28,8 +28,9 @@ export default class Container extends Node {
     return {
       template: `
           <div data-type="drag_item">
-            <div ref="content"> </div>
-            <div data-drag-handle></div>
+          <div data-drag-handle></div>
+            <div ref="content"> 
+            </div>
           </div>
           `
     } as View;
@@ -38,13 +39,17 @@ export default class Container extends Node {
   inputRules({ schema, type }):Array<typeof blockTypeChanged> {
     return [
       blockTypeChanged(/^\s*#\s$/, type, schema.nodes.heading),
-      blockTypeChanged(/^\s*>\s$/, type, schema.nodes.paragraph)
+      //blockTypeChanged(/^\s*>\s$/, type, schema.nodes.paragraph),
+      blockTypeChanged(/^\s*@\s$/, type, schema.nodes.testblock),
+      blockTypeChanged(/^\s*>\s$/, type, schema.nodes.blockquote),
+      blockTypeChanged(/^\s*([-+*])\s$/, type, schema.nodes.bullet_list),
+      blockTypeChanged(/^\s*(\[ \])\s$/, type, schema.nodes.todo_list),
     ]
   }
 
   keys({ type }) {
     return { 
-      "Enter": newLine
+      "Enter": newLineUtility.Instance.newLine.bind(newLineUtility.Instance)
     
   }
 

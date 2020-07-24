@@ -9,6 +9,9 @@ module.exports = {
   },
   runtimeCompiler: true,
   configureWebpack: {
-    devtool: 'source-map'
+    devtool: 'source-map',
+    node: {
+      fs: "empty"
+   }
   }
 };
