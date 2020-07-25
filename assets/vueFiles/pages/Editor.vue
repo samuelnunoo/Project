@@ -57,7 +57,7 @@ export default {
   background:black;
 }
 [data-type="drag_item"] {
-  display:auto
+  display:flex
 }
 .ProseMirror {
   margin: auto;
