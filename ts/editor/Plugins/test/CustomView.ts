@@ -9,7 +9,6 @@ export default class CustomView extends ComponentView {
           editor: this.editor,
           type: this.node.type.spec.toDOM(this.node)[0],
           attrs: { class:'none'},
-          show: false,
           node: this.node,
           view: this.view,
           getPos: () => this.getPos(),
@@ -28,13 +27,52 @@ export default class CustomView extends ComponentView {
         }
     
         this.vm = new Component({
-         data: function() {
-             return { show: false}
-         },
           parent: this.parent,
           propsData: props,
         }).$mount()
     
         return this.vm.$el
+      }
+
+      stopEvent(event) {
+        if (typeof this.extension.stopEvent === 'function') {
+          return this.extension.stopEvent(event)
+        }
+    
+        const draggable = !!this.extension.schema.draggable
+    
+        // support a custom drag handle
+        if (draggable && event.type === 'mousedown') {
+          const dragHandle = event.target.closest
+            && event.target.closest('[data-drag-handle]')
+          const isValidDragHandle = dragHandle
+            && (this.dom === dragHandle || this.dom.contains(dragHandle))
+    
+          if (isValidDragHandle) {
+            this.captureEvents = false
+            document.addEventListener('dragend', () => {
+              this.captureEvents = true
+            }, { once: true })
+          }
+        }
+    
+        const isCopy = event.type === 'copy'
+        const isPaste = event.type === 'paste'
+        const isCut = event.type === 'cut'
+        const isDrag = event.type.startsWith('drag') || event.type === 'drop'
+    
+        if (isCopy || isPaste || isCut) {
+          return false
+        }
+
+        if (draggable && isDrag) {
+            if (event.type == "dragstart") {
+                if (!this.vm.isHandle) event.preventDefault()
+            }
+            return false 
+        }
+    
+    
+        return this.captureEvents
       }
 }

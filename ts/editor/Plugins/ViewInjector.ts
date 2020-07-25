@@ -39,10 +39,17 @@ export default class Nodes {
             Object.defineProperty(node, 'view', { 
                 get: function() {
                     return {
-                        props: ['type','attrs','show'],
+                        props: ['type','attrs'],
+                        data: function () {
+                            return {
+                                show: false,
+                                isHandle: false
+                            }
+                        },
+
                         template: `
                         <div data-type="drag_item" @mouseover = "show = true" @mouseleave="show = false" >
-                            <div v-if="show" data-drag-handle contenteditable="false"></div>
+                            <div v-if="show" @mouseover = "isHandle = true" @mouseleave="isHandle = false" data-drag-handle contenteditable="false"></div>
                             <component  :is="type" v-bind="attrs" ref="content" contenteditable="true" />
                         </div>`
                     }
