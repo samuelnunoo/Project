@@ -1,27 +1,31 @@
 
 import { Paragraph } from 'tiptap';
 import * as extension from 'tiptap-extensions';
+//import TestBlock from "nodes/TestBlock";
+
+const nodes =  [
+    new Paragraph(),
+    new extension.HorizontalRule(),
+    new extension.Heading(),
+    new extension.Blockquote(),
+    new extension.BulletList(),
+    new extension.CodeBlock(),
+    new extension.CodeBlockHighlight(),
+    new extension.HardBreak(),
+    new extension.Image(),
+    new extension.ListItem(),
+    new extension.Mention(),
+    new extension.OrderedList(),
+    new extension.TodoItem(),
+    new extension.TodoList(),
+   // new TestBlock()
+]
 
 export default class Nodes {
     private _nodes: Array<any>
 
     constructor() {
-        this._nodes = [
-            new Paragraph(),
-            new extension.HorizontalRule(),
-            new extension.Heading(),
-            new extension.Blockquote(),
-            new extension.BulletList(),
-            new extension.CodeBlock(),
-            new extension.CodeBlockHighlight(),
-            new extension.HardBreak(),
-            new extension.Image(),
-            new extension.ListItem(),
-            new extension.Mention(),
-            new extension.OrderedList(),
-            new extension.TodoItem(),
-            new extension.TodoList(),
-        ]
+        this._nodes = nodes
 
         this.init()
     }
@@ -29,17 +33,17 @@ export default class Nodes {
     init (): void {
 
         for (const node of this._nodes) {
-            const tag = node.schema.toDOM(node.schema)[0]
-            if (tag.toLowerCase().includes('object')) continue;
-            
+         
+        
             
             Object.defineProperty(node, 'view', { 
                 get: function() {
                     return {
+                        props: ['type','attrs','show'],
                         template: `
-                        <div data-type="drag_item">
-                            <div data-drag-handle></div>
-                            <${tag} ref="content"></${tag}>
+                        <div data-type="drag_item" @mouseover = "show = true" @mouseleave="show = false" >
+                            <div v-if="show" data-drag-handle contenteditable="false"></div>
+                            <component  :is="type" v-bind="attrs" ref="content" contenteditable="true" />
                         </div>`
                     }
                 }

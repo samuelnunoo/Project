@@ -6,13 +6,13 @@
 
 <script>
 // Import the editor
+import Editor from "plugins/test/Editor.js";
+//import {Editor} from 'tiptap';
 import { EditorContent } from "tiptap";
 import Icon from "components/Icon.vue"
 import javascript from 'highlight.js/lib/languages/javascript'
-import Paragraph from "nodes/Paragraph.js";
-import Nodes from "plugins/ViewInjector";
-import {DragHandle} from "tiptap-extensions";
-import Editor from "plugins/Editor.js";
+import Nodes from "plugins/ViewInjector.js";
+
 
 export default {
   components: {
@@ -31,11 +31,11 @@ export default {
     
       `,
       extensions: [
-    // ...new Nodes().nodes
+    ...new Nodes().nodes
 
       ]
     });
-    this.editor.getJSON()
+     this.editor.getJSON()
 
     //const schema = this.editor.schema
     //const plugin = new DragContainer(schema).plugin
@@ -44,7 +44,7 @@ export default {
   },
   beforeDestroy() {
     this.editor.destroy();
-  }
+ }
 };
 </script>
 

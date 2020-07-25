@@ -13,24 +13,13 @@ export default class TestBlock extends Node {
             content: "heading{1} richtext{1}",
             group: "type",
             draggable: false,
-            toDOM: () => ["div", {"data-type":"testblock"}, 0],
+            toDOM: () => ["div", {"data-type":this.name}, 0],
             parseDOM:  [   {
-                 tag: `[data-type="testblock"]`
+                 tag: `[data-type="${this.name}"]`
             }]
         } as NodeSpec
     }
 
-    get view(): View {
-        return {
-            template: `
-            <div data-type="testblock">
-                <div ref="content" contenteditable = "true">
-                </div>
-            </div>`
-        }as View
-
-    } 
-
-        
+ 
 
     }
