@@ -1,6 +1,8 @@
 import { Node } from "tiptap"
 import { View } from "../../interfaces/View";
 import { NodeSpec } from "../../interfaces/NodeSpec"
+import { wrappingInputRule} from 'tiptap-commands'
+import blockTypeChange from "plugins/blockTypeChange";
 
 export default class RichText extends Node {
   get name(): string {
@@ -9,8 +11,7 @@ export default class RichText extends Node {
 
   get schema(): NodeSpec {
     return {
-      content: "container+",
-      group: "block",
+      content: "block+",
       toDOM: () => ["div",{"data-type":"richtext"},0],
       parseDOM: [{ 
           tag: `[data-type="richtext"]`
@@ -28,5 +29,11 @@ export default class RichText extends Node {
         </div>`
     }as View
 
-} 
+  }
+  inputRules({ type }) {
+    return [
+      blockTypeChange(/^@2\s$/, type)
+    ]
+
+  }
 }

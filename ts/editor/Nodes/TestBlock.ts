@@ -1,6 +1,7 @@
 import { Node } from "tiptap"
 import { NodeSpec } from "../../interfaces/NodeSpec"
 import { View } from "../../interfaces/View";
+import  blockTypeChange from "plugins/blockTypeChange";
 
 export default class TestBlock extends Node {
 
@@ -18,6 +19,13 @@ export default class TestBlock extends Node {
                  tag: `[data-type="${this.name}"]`
             }]
         } as NodeSpec
+    }
+
+
+    inputRules({ type }): Array<any> {
+        return [
+            blockTypeChange(/^@\s$/, type)
+        ]
     }
 
  

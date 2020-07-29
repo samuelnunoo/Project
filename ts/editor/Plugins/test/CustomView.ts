@@ -5,10 +5,12 @@ import Vue from 'vue'
 export default class CustomView extends ComponentView {
     createDOM() {
         const Component = Vue.extend(this.component)
+        const DOM = this.node.type.spec.toDOM(this.node)
+        console.log(this.node.type.spec.toDOM(this.node)[1])
         const props = {
           editor: this.editor,
-          type: this.node.type.spec.toDOM(this.node)[0],
-          attrs: { class:'none'},
+          type: DOM[0],
+          attrs: DOM[1] !== 0 ?  DOM[1] : {class: 'none'},
           node: this.node,
           view: this.view,
           getPos: () => this.getPos(),

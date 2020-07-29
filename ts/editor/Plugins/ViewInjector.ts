@@ -1,7 +1,8 @@
 
 import { Paragraph } from 'tiptap';
 import * as extension from 'tiptap-extensions';
-//import TestBlock from "nodes/TestBlock";
+import RichText from "nodes/RichText"
+import TestBlock from "nodes/TestBlock";
 
 const nodes =  [
     new Paragraph(),
@@ -18,7 +19,8 @@ const nodes =  [
     new extension.OrderedList(),
     new extension.TodoItem(),
     new extension.TodoList(),
-   // new TestBlock()
+    new RichText(),
+    new TestBlock(),
 ]
 
 export default class Nodes {
@@ -36,7 +38,7 @@ export default class Nodes {
          
         
             
-            Object.defineProperty(node, 'view', { 
+             Object.defineProperty(node, 'view', { 
                 get: function() {
                     return {
                         props: ['type','attrs'],

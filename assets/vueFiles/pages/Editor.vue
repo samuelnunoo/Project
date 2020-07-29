@@ -12,6 +12,7 @@ import { EditorContent } from "tiptap";
 import Icon from "components/Icon.vue"
 import javascript from 'highlight.js/lib/languages/javascript'
 import Nodes from "plugins/ViewInjector.js";
+import Doc from "nodes/Doc";
 
 
 export default {
@@ -26,20 +27,16 @@ export default {
   },
   mounted() {
     this.editor = new Editor({
-      content: `Testing 1 2 3
-      Testin 2 2 3
-    
+      content: `
       `,
       extensions: [
+        new Doc(),
     ...new Nodes().nodes
 
       ]
     });
-     this.editor.getJSON()
-
-    //const schema = this.editor.schema
-    //const plugin = new DragContainer(schema).plugin
-    //this.editor.registerPlugin(plugin)
+    
+    console.log(this.editor.schema)
 
   },
   beforeDestroy() {
@@ -51,13 +48,17 @@ export default {
 <style lang="scss">
 @import "/assets/media/todo.scss";
 
+[data-type="richtext"] {
+  border-style: solid;
+  width: 50%;
+}
 [data-drag-handle]{
   width: 20px;
   height: 20px;
   background:black;
 }
 [data-type="drag_item"] {
-  display:flex
+  display:auto
 }
 .ProseMirror {
   margin: auto;
