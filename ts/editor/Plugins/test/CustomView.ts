@@ -6,7 +6,6 @@ export default class CustomView extends ComponentView {
     createDOM() {
         const Component = Vue.extend(this.component)
         const DOM = this.node.type.spec.toDOM(this.node)
-        console.log(this.node.type.spec.toDOM(this.node)[1])
         const props = {
           editor: this.editor,
           type: DOM[0],
@@ -31,6 +30,25 @@ export default class CustomView extends ComponentView {
         this.vm = new Component({
           parent: this.parent,
           propsData: props,
+          data: function() {
+            return {
+              visible: false,
+              isHandle: false
+
+            }
+          
+
+          },
+          methods: {
+            show() {
+              const parent = this.$el.parentElement?.tagName
+              if (parent === "LI") return
+              this.$data.visible = true
+            },
+            hide() {
+              this.$data.visible = false
+            }
+          }
         }).$mount()
     
         return this.vm.$el

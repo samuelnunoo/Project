@@ -7,13 +7,14 @@
   },
   "scripts": {
     "postinstall": "link-module-alias",
+    "storybook": "start-storybook",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "tauri:build": "vue-cli-service tauri:build",
     "tauri:serve": "vue-cli-service tauri:serve",
     "test:pm": "moduleserve tests/Editor",
-    "test:vue": "node --inspect node_modules/mochapack/bin/mochapack --webpack-config tests/Vue/webpack.config.js --require tests/Vue/setup.js tests/Vue/*.test.js "
+    "test:vue": "node  node_modules/mochapack/bin/mochapack --webpack-config tests/Vue/webpack.config.js  tests/Vue/setup.js tests/Vue/*.test.js "
   },
   "_moduleAliases": {
     "pages": "assets/vueFiles/pages",
@@ -25,7 +26,9 @@
     "media": "assets/media"
   },
   "dependencies": {
+    "@types/chai": "^4.2.12",
     "@types/expect": "^24.3.0",
+    "@types/mocha": "^8.0.0",
     "@types/node": "^7.0.5",
     "@vue/test-utils": "^1.0.3",
     "canvas": "^2.6.1",
@@ -61,6 +64,7 @@
     "@vue/cli-plugin-babel": "~4.4.0",
     "@vue/cli-plugin-eslint": "~4.4.0",
     "@vue/cli-plugin-typescript": "~4.4.0",
+    "@vue/cli-plugin-unit-mocha": "~4.4.0",
     "@vue/cli-service": "~4.4.0",
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/eslint-config-typescript": "^5.0.2",

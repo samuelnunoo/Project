@@ -13,6 +13,7 @@ import Icon from "components/Icon.vue"
 import javascript from 'highlight.js/lib/languages/javascript'
 import Nodes from "plugins/ViewInjector.js";
 import Doc from "nodes/Doc";
+import handleDOM from "plugins/handleDOM"
 
 
 export default {
@@ -27,16 +28,23 @@ export default {
   },
   mounted() {
     this.editor = new Editor({
-      content: `
+      content: ` <h1> Testingasdddddddddddddddddddddddddddddddddddddddddddddddddddddddd </h1>
+      <div data-type="richtext">
+      <p>Testing</p>
+     <p> Testing123</p> 
+      </div>
+      Hello world
+ 
       `,
       extensions: [
         new Doc(),
-    ...new Nodes().nodes
+    ...new Nodes().nodes,
+    new handleDOM()
+
 
       ]
     });
-    
-    console.log(this.editor.schema)
+
 
   },
   beforeDestroy() {
@@ -47,6 +55,12 @@ export default {
 
 <style lang="scss">
 @import "/assets/media/todo.scss";
+@import "/assets/media/placeholder.scss";
+@import "/assets/media/readonly.scss";
+@import "/assets/media/searchAndReplace.scss";
+@import "/assets/media/suggestion.scss";
+@import "/assets/media/title.scss";
+
 
 [data-type="richtext"] {
   border-style: solid;
@@ -58,7 +72,7 @@ export default {
   background:black;
 }
 [data-type="drag_item"] {
-  display:auto
+  display:flex;
 }
 .ProseMirror {
   margin: auto;

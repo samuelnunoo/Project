@@ -2,7 +2,7 @@ import { Node } from "tiptap"
 import { NodeSpec } from "../../interfaces/NodeSpec"
 import { View } from "../../interfaces/View";
 import  blockTypeChange from "plugins/blockTypeChange";
-
+import tabSelection from "plugins/tabSelection";
 export default class TestBlock extends Node {
 
     get name(): string {
@@ -28,6 +28,6 @@ export default class TestBlock extends Node {
         ]
     }
 
- 
+   
 
     }

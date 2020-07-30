@@ -1,0 +1,38 @@
+[
+    {
+        "type": "Directory",
+        "name": "c:\\Users\\Samuel\\Documents\\GitHub\\Project\\assets\\vueFiles",
+        "parent_id": null,
+        "fsPath": "c:\\Users\\Samuel\\Documents\\GitHub\\Project\\assets\\vueFiles",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "sjMzpdPbNoCaOD9T"
+    },
+    {
+        "type": "Directory",
+        "name": "c:\\Users\\Samuel\\Documents\\GitHub\\Project\\ts\\editor",
+        "parent_id": null,
+        "fsPath": "c:\\Users\\Samuel\\Documents\\GitHub\\Project\\ts\\editor",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "VDpZ5K3jgAa1LhY0"
+    },
+    {
+        "type": "Directory",
+        "name": "c:\\Users\\Samuel\\Documents\\GitHub\\Project\\tests",
+        "parent_id": null,
+        "fsPath": "c:\\Users\\Samuel\\Documents\\GitHub\\Project\\tests",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "EbN7O0PaYVUGQHIR"
+    },
+    {
+        "type": "File",
+        "name": "c:\\Users\\Samuel\\Documents\\GitHub\\Project\\package.json",
+        "parent_id": null,
+        "fsPath": "c:\\Users\\Samuel\\Documents\\GitHub\\Project\\package.json",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "7OIzQRG1lSfpq6Ck"
+    }
+]

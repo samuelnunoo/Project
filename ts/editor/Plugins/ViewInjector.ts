@@ -4,6 +4,13 @@ import * as extension from 'tiptap-extensions';
 import RichText from "nodes/RichText"
 import TestBlock from "nodes/TestBlock";
 
+const exclude = [
+    "list_item",
+    "ordered_list",
+    "todo_list",
+    "todo_item",
+    "bullet_list"
+]
 const nodes =  [
     new Paragraph(),
     new extension.HorizontalRule(),
@@ -35,23 +42,20 @@ export default class Nodes {
     init (): void {
 
         for (const node of this._nodes) {
-         
+            
+
+            if (exclude.includes(node.name)) continue
         
             
              Object.defineProperty(node, 'view', { 
                 get: function() {
                     return {
                         props: ['type','attrs'],
-                        data: function () {
-                            return {
-                                show: false,
-                                isHandle: false
-                            }
-                        },
+                
 
                         template: `
-                        <div data-type="drag_item" @mouseover = "show = true" @mouseleave="show = false" >
-                            <div v-if="show" @mouseover = "isHandle = true" @mouseleave="isHandle = false" data-drag-handle contenteditable="false"></div>
+                        <div data-type = "drag_item" @mouseover = "show" @mouseleave = "hide" >
+                            <div v-if="visible" @mouseover = "isHandle = true" @mouseleave="isHandle = false" data-drag-handle contenteditable="false"></div>
                             <component  :is="type" v-bind="attrs" ref="content" contenteditable="true" />
                         </div>`
                     }
