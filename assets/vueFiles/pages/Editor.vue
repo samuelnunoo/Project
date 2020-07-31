@@ -62,18 +62,6 @@ export default {
 @import "/assets/media/title.scss";
 
 
-[data-type="richtext"] {
-  border-style: solid;
-  width: 50%;
-}
-[data-drag-handle]{
-  width: 20px;
-  height: 20px;
-  background:black;
-}
-[data-type="drag_item"] {
-  display:flex;
-}
 .ProseMirror {
   margin: auto;
   width: 50%;

@@ -2,6 +2,7 @@ import { Node } from "tiptap"
 import { View } from "../../interfaces/View";
 import { NodeSpec } from "../../interfaces/NodeSpec"
 import blockTypeChange from "plugins/blockTypeChange";
+import richTextView from "components/RichText.vue"
 
 export default class RichText extends Node {
   get name(): string {
@@ -20,15 +21,8 @@ export default class RichText extends Node {
     } as NodeSpec
   }
 
-  get view(): View {
-    return {
-        template: `
-        <div data-type="richtext" class="textbox">
-            <div ref="content" contenteditable = "true">
-            </div>
-        </div>`
-    } as View
-
+  get view() {
+    return  richTextView
   }
 
   inputRules({ type }) {

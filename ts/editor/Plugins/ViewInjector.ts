@@ -3,6 +3,7 @@ import { Paragraph } from 'tiptap';
 import * as extension from 'tiptap-extensions';
 import RichText from "nodes/RichText"
 import TestBlock from "nodes/TestBlock";
+import dragHandle from "components/dragHandle.vue";
 
 const exclude = [
     "list_item",
@@ -49,16 +50,7 @@ export default class Nodes {
             
              Object.defineProperty(node, 'view', { 
                 get: function() {
-                    return {
-                        props: ['type','attrs'],
-                
-
-                        template: `
-                        <div data-type = "drag_item" @mouseover = "show" @mouseleave = "hide" >
-                            <div v-if="visible" @mouseover = "isHandle = true" @mouseleave="isHandle = false" data-drag-handle contenteditable="false"></div>
-                            <component  :is="type" v-bind="attrs" ref="content" contenteditable="true" />
-                        </div>`
-                    }
+                    return  dragHandle 
                 }
             })
 
