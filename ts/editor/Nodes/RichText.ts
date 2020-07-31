@@ -27,7 +27,7 @@ export default class RichText extends Node {
             <div ref="content" contenteditable = "true">
             </div>
         </div>`
-    }as View
+    } as View
 
   }
 
