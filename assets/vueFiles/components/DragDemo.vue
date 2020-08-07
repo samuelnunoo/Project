@@ -1,29 +1,36 @@
 <template>
-<v-container>
-
-     <v-container class = 'border' >
-         <v-row v-for = "(row, index) in rows" :index = "index">
-             <v-col  v-for= "(col, subIndex) in row.cards"  :col="subIndex" :row="index" >
-                 <div @mousedown = 'part1' :col = "subIndex" :row="index" class = 'brick' >
-                     <h1> {{subIndex}}  </h1>
-                </div>
-              </v-col>
-         </v-row>
-
-    </v-container>
-   
+<v-container class = 'border'>
+    <v-row v-for = "(row, index) in rows" :index = "index">
+        <v-col  v-for= "(col, subIndex) in row.cards"  :col="subIndex" :row="index" >
+            <pm-card 
+                @mousedown.native = 'init' 
+                style = 'width: 100%;'
+                :col = "subIndex" 
+                :row="index" 
+                class = 'brick'
+                :type = "col.type"
+                :attrs = "col.attrs"
+                :content = "col.content" 
+            />
+        </v-col>
+    </v-row>
+    <div class = 'add' />
 </v-container>
 </template>
 
 
 <script>
+import pmCard from "./TemplateEditor/Component.vue";
 export default{
     name:'drag-demo',
+    components: {'pm-card': pmCard},
     data() {
         return {
             isDrag: false,
             element: null,
             bias: null,
+            pageX: 0,
+            pageY: 0,
             debounce: false,
             collided: null,
             oldData: null,
@@ -35,11 +42,29 @@ export default{
             bricks: [],
             rows: [
                 {
-                    cards: [
-                        {
-                            content: 'Hello World'
-                        },
-                        { content: "hello two"}
+                cards: [
+                    {
+                        type: 'heading',
+                        attrs: {},
+                        content: "Hello World 1"
+                    },
+                        {content: "hello two",
+                        attrs: {},
+                        type: 'heading'
+                        }
+                    ]
+                },
+                 {
+                cards: [
+                    {
+                        type: 'heading',
+                        attrs: {},
+                        content: "Hello World 1"
+                    },
+                        {content: "hello two",
+                        attrs: {},
+                        type: 'heading'
+                        }
                     ]
                 }
             ]
@@ -47,7 +72,9 @@ export default{
         }
     },
     methods: {
-        part1(event) {
+        init(event) {
+            event.preventDefault()
+            event.stopPropagation()
             this.debounce = false
             this.isDrag = true
            
@@ -59,10 +86,13 @@ export default{
             const row = parseInt(this.target.getAttribute('row'))
             const col = parseInt(this.target.getAttribute('col'))
             this.target.style.position = "absolute"
-            this.target.className = "box"
 
-            this.offsetLeft = this.initX - (this.target.getBoundingClientRect().width/2)
-            this.offsetTop = this.initY - (this.target.getBoundingClientRect().height/2)
+            this.target.classList.remove("brick")
+            this.target.classList.add("box")
+ 
+
+            this.offsetLeft = this.initX + 10
+            this.offsetTop = this.initY 
 
             this.oldData = this.rows[row].cards.splice(col,1)[0]
 
@@ -71,7 +101,7 @@ export default{
             this.bricks = document.querySelectorAll('.brick')
         },
         reset() {
-
+        
             const row = parseInt(this.target.getAttribute("row"))
             const col = parseInt(this.target.getAttribute("col"))
 
@@ -84,7 +114,7 @@ export default{
         },
         stopDrag(event) {
         
-            
+                if (this.element) this.element.remove()
            // this.target.fistsChild.className =  "brick"
             document.removeEventListener('mousemove', this.moveObject, false)
             document.removeEventListener('mouseup', this.stopDrag, false)
@@ -111,7 +141,6 @@ export default{
         },
         createNew(row,col,target, tindex) {
             const newArray = this.deepCopy(this.rows)
-    
           
             switch(this.bias) {
                 case "left":
@@ -124,17 +153,11 @@ export default{
                     newArray.splice(row, 0, { cards: [this.oldData]})
                     break;
                 case "bottom":
-                    newArray.push( { cards: [this.oldData]})
+                    newArray.splice(row + 1, 0 ,{ cards: [this.oldData]})
                     break;
-
-
             }
 
-     
             this.rows = newArray
-
-        
-            
 
         },
         placeDragged(hit, target, bias) {
@@ -164,6 +187,8 @@ export default{
         },
         moveObject({ pageX, pageY }) {
             if (this.isDrag) {
+                this.pageX = pageX
+                this.pageY = pageY
                 const top = this.offsetTop + (pageY - this.initY)
                 const left = this.offsetLeft + (pageX - this.initX)
                 this.target.style.top = top + 'px'
@@ -176,10 +201,10 @@ export default{
         },
         collisionCheck(brick, { left,right,top,bottom }) {
                 const pos = brick.getBoundingClientRect()
-                const leftSide = this.compare(left, pos.left, pos.right)
-                const rightSide = this.compare(right,pos.left, pos.right)
-                const topSide = this.compare(top, pos.top, pos.bottom)
-                const bottomSide = this.compare(bottom,pos.top, pos.bottom)
+                const leftSide = this.compare(this.pageX, pos.left, pos.right)
+                const rightSide = this.compare(this.pageX,pos.left, pos.right)
+                const topSide = this.compare(this.pageY, pos.top, pos.bottom)
+                const bottomSide = this.compare(this.pageY,pos.top, pos.bottom)
 
                 return (leftSide || rightSide) && (topSide || bottomSide)
         },
@@ -188,14 +213,10 @@ export default{
             const xDiscriminator = left + (width/2)
             const yDiscriminator = top + (height/2)
 
-            
-           
-
-            const leftSide = Math.abs(pos.left - xDiscriminator)
-            const rightSide = Math.abs(pos.right - xDiscriminator)
-            const topSide = Math.abs(pos.top - yDiscriminator)
-            const bottomSide = Math.abs(pos.bottom - yDiscriminator)
-
+            const rightSide= (this.pageX - left) / width
+            const leftSide = ((left + width) - this.pageX) / width
+            const topSide = ((top + height) - this.pageY) / height
+            const bottomSide = (this.pageY - top) / height
 
             const sides = {
                 'left': leftSide,
@@ -212,6 +233,7 @@ export default{
             const thickness = 5
             if (this.element) this.element.remove()
             this.element = document.createElement('div')
+            this.element.className = "blue_bar"
             this.$el.appendChild(this.element)
             this.element.style.position = "absolute"
             const pos = brick.getBoundingClientRect()
@@ -303,14 +325,21 @@ export default{
 </script>
 <style scoped>
 
-.box {
-    width: 40px;
+.border{
+    background: grey;
+}
+.add{
     height: 40px;
-    background: green;
+    width: 100%;
+}
+
+.box {
+
+
+    
 }
 
 .brick {
-    height: 40px;
-    background: red;
+    cursor: move;
 }
 </style>

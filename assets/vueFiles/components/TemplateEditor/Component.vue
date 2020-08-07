@@ -2,23 +2,23 @@
 <v-card class="template">
     <v-container>
 
-<v-row> 
-     <v-menu absolute v-model="showMenu">
-         <template v-slot:activator ="{ on , attrs}">
-              <v-btn v-bind="attrs" v-on="on" > Hi </v-btn>
-        </template>
-       <v-list>
-        <v-list-item
-            v-for="(item,index) in items"
-            :key="index"
-            @click="trigger(item)"
-        >
-            <v-list-item-title>{{ item.title}} </v-list-item-title>
-        </v-list-item>
-        </v-list>
-</v-menu>
-</v-row>
-<v-row no-gutters>
+        <v-row> 
+            <v-menu absolute v-model="showMenu">
+                <template v-slot:activator ="{ on , attrs}">
+                    <v-btn v-bind="attrs" v-on="on" > Hi </v-btn>
+                </template>
+            <v-list>
+                <v-list-item
+                    v-for="(item,index) in items"
+                    :key="index"
+                    @click="trigger(item)"
+                >
+                    <v-list-item-title>{{ item.title}} </v-list-item-title>
+                </v-list-item>
+                </v-list>
+        </v-menu>
+        </v-row>
+        <v-row no-gutters>
     <v-col 
         cols="1"
     >
@@ -27,7 +27,6 @@
     <v-col cols="11">
         <component
             @click.native="trigger"
-            @mouse
             :is='contentType' 
             :attrs="attrs"
             :canEdit="false" 
